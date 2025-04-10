@@ -20,7 +20,7 @@ from ansible_collections.yadro.obmc.plugins.module_utils.redfish.api.system.proc
 from ansible_collections.yadro.obmc.plugins.module_utils.redfish.api.system.pcie_device import PCIeDevice
 from ansible_collections.yadro.obmc.plugins.module_utils.redfish.api.system.memory import Memory
 from ansible_collections.yadro.obmc.plugins.module_utils.redfish.api.system.bios import Bios
-
+from ansible_collections.yadro.obmc.plugins.module_utils.redfish.api.system.nic import NetworkInterface
 
 class System(RedfishAPIObject):
 
@@ -55,6 +55,9 @@ class System(RedfishAPIObject):
 
     def get_memory_collection(self):  # type: () -> List[Memory]
         raise NotImplementedError("Method not implemented")
+    
+    def get_network_interfaces(self): #type: () -> List[Network]
+        raise NotImplementedError("Method not implemented")
 
     def get_boot_source_override(self):  # type: () -> Dict
         raise NotImplementedError("Method not implemented")
@@ -82,7 +85,7 @@ class System(RedfishAPIObject):
 
     def power_reset_force(self):  # type: () -> None
         raise NotImplementedError("Method not implemented")
-
+    
 
 class System_v1_13_0(System):
 
@@ -107,6 +110,14 @@ class System_v1_13_0(System):
 
     def get_manufacturer(self):  # type: () -> str
         return self._get_field("Manufacturer")
+
+    def get_network_interfaces(self): #type: () -> List[NetworkInterface]
+        network_interfaces = []
+        network_interfaces_collection = self._client.get("{0}/NetworkInterfaces".format(self._path)).json
+        for member in network_interfaces_collection["Members"]:
+            nic_data = self._client.get(member["@odata.id"]).json
+            network_interfaces.append(NetworkInterface.from_json(self._client,nic_data))
+        return network_interfaces
 
     def get_processor_collection(self):  # type: () -> List[Processor]
         processors = []

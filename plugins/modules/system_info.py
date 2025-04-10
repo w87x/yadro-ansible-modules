@@ -81,7 +81,7 @@ class OpenBmcSystemInfoModule(OpenBmcModule):
         processor_collection = system.get_processor_collection()
         memory_collection = system.get_memory_collection()
         pcie_devices = system.get_pcie_device_collection()
-
+        network_interfaces = system.get_network_interfaces()
         system_info = {
             "BMC": {
                 "Id": manager.get_id(),
@@ -112,8 +112,17 @@ class OpenBmcSystemInfoModule(OpenBmcModule):
                     "PowerState": chassis.get_power_state(),
                     "Status": chassis.get_status(),
                     "SerialNumber": chassis.get_serial_number(),
-                    "PartNumber": chassis.get_part_number(),
+                    "PartNumber": chassis.get_part_number(),                   
                 } for chassis in chassis_collection
+            ],
+            "NetworkInterfaces": [
+                {
+                    "Id": nic.get_id(),
+                    "Name": nic.get_name(),
+                    "MAC": nic.get_mac(),
+                    "Health": nic.get_health(),
+                    "State": nic.get_state(),                    
+                } for nic in network_interfaces
             ],
             "Processors": [
                 {

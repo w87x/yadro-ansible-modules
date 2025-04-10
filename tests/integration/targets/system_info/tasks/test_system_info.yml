@@ -19,3 +19,4 @@
       - "result.system_info.PCIeDevices != None"
       - "result.system_info.Fans != None"
       - "result.system_info.PowerSupplies != None"
+      - "result.system_info.NetworkInterfaces != None"
