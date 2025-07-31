@@ -154,27 +154,27 @@ class OpenBmcSystemInfoModule(OpenBmcModule):
                     "SpareDeviceCount": memory.get_spare_device_count(),
                 } for memory in memory_collection
             ],
-            "PCIeDevices": [
-                {
-                    "Id": device.get_id(),
-                    "Address": device.get_address(),
-                    "Model": device.get_model(),
-                    "Manufacturer": device.get_manufacturer(),
-                    "Functions": [
-                        {
-                            "Id": func.get_id(),
-                            "Name": func.get_name(),
-                            "DeviceClass": func.get_device_class(),
-                            "ClassCode": func.get_class_code(),
-                            "RevisionId": func.get_revision_id(),
-                            "VendorId": func.get_vendor_id(),
-                            "DeviceId": func.get_device_id(),
-                            "SubsystemVendorId": func.get_subsystem_vendor_id(),
-                            "SubsystemId": func.get_subsystem_id(),
-                        } for func in device.get_function_collection()
-                    ]
-                } for device in pcie_devices
-            ],
+            # "PCIeDevices": [
+            #     {
+            #         "Id": device.get_id(),
+            #         "Address": device.get_address(),
+            #         "Model": device.get_model(),
+            #         "Manufacturer": device.get_manufacturer(),
+            #         "Functions": [
+            #             {
+            #                 "Id": func.get_id(),
+            #                 "Name": func.get_name(),
+            #                 "DeviceClass": func.get_device_class(),
+            #                 "ClassCode": func.get_class_code(),
+            #                 "RevisionId": func.get_revision_id(),
+            #                 "VendorId": func.get_vendor_id(),
+            #                 "DeviceId": func.get_device_id(),
+            #                 "SubsystemVendorId": func.get_subsystem_vendor_id(),
+            #                 "SubsystemId": func.get_subsystem_id(),
+            #             } for func in device.get_function_collection()
+            #         ]
+            #     } for device in pcie_devices
+            # ],
             "Fans": [
                 {
                     "Id": fan.get_id(),
