@@ -26,6 +26,8 @@ class Chassis(RedfishAPIObject):
     def select_version(cls, version):  # type: (str) -> Optional[ClassVar[Chassis]]
         if version == "#Chassis.v1_14_0.Chassis":
             return Chassis_v1_14_0
+        if version == "#Chassis.v1_20_0.Chassis":
+            return Chassis_v1_20_0
 
     def get_model(self):  # type: () -> str
         raise NotImplementedError("Method not implemented")
@@ -53,6 +55,41 @@ class Chassis(RedfishAPIObject):
 
     def get_power(self):  # type: () -> Power
         raise NotImplementedError("Method not implemented")
+
+
+class Chassis_v1_20_0(Chassis):
+
+    def __init__(self, *args, **kwargs):
+        super(Chassis_v1_20_0, self).__init__(*args, **kwargs)
+
+    def get_model(self):  # type: () -> str
+        return self._get_field("Model")
+
+    def get_manufacturer(self):  # type: () -> str
+        return self._get_field("Manufacturer")
+
+    def get_chassis_type(self):  # type: () -> str
+        return self._get_field("ChassisType")
+
+    def get_power_state(self):  # type: () -> str
+        return self._get_field("PowerState")
+
+    def get_status(self):  # type: () -> Dict
+        return self._get_field("Status")
+
+    def get_serial_number(self):  # type: () -> str
+        return self._get_field("SerialNumber")
+
+    def get_part_number(self):  # type: () -> str
+        return self._get_field("PartNumber")
+
+    def get_thermal(self):  # type: () -> Thermal
+        thermal_data = self._client.get("{0}/Thermal".format(self._path)).json
+        return Thermal.from_json(self._client, thermal_data)
+
+    def get_power(self):  # type: () -> Power
+        power_data = self._client.get("{0}/Power".format(self._path)).json
+        return Power.from_json(self._client, power_data)
 
 
 class Chassis_v1_14_0(Chassis):
