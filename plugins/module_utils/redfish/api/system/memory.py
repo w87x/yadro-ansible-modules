@@ -24,6 +24,8 @@ class Memory(RedfishAPIObject):
     def select_version(cls, version):  # type: (str) -> Optional[ClassVar[Memory]]
         if version == "#Memory.v1_7_0.Memory":
             return Memory_v1_7_0
+        if version == "#Memory.v1_15_0.Memory":
+            return Memory_v1_15_0
 
     def get_part_number(self):  # type: () -> str
         raise NotImplementedError("Method not implemented")
@@ -60,6 +62,41 @@ class Memory_v1_7_0(Memory):
 
     def __init__(self, *args, **kwargs):
         super(Memory_v1_7_0, self).__init__(*args, **kwargs)
+
+    def get_part_number(self):  # type: () -> str
+        return self._get_field("PartNumber")
+
+    def get_serial_number(self):  # type: () -> str
+        return self._get_field("SerialNumber")
+
+    def get_device_type(self):  # type: () -> str
+        return self._get_field("MemoryDeviceType")
+
+    def get_status(self):  # type: () -> Dict
+        return self._get_field("Status")
+
+    def get_manufacturer(self):  # type: () -> str
+        return self._get_field("Manufacturer")
+
+    def get_device_locator(self):  # type: () -> str
+        return self._get_field("DeviceLocator")
+
+    def get_capacity_mib(self):  # type: () -> int
+        return self._get_field("CapacityMiB")
+
+    def get_operating_speed_mhz(self):  # type: () -> int
+        return self._get_field("OperatingSpeedMhz")
+
+    def get_data_with_bits(self):  # type: () -> int
+        return self._get_field("DataWidthBits")
+
+    def get_spare_device_count(self):  # type: () -> int
+        return self._get_field("SpareDeviceCount")
+
+class Memory_v1_15_0(Memory):
+
+    def __init__(self, *args, **kwargs):
+        super(Memory_v1_15_0, self).__init__(*args, **kwargs)
 
     def get_part_number(self):  # type: () -> str
         return self._get_field("PartNumber")
