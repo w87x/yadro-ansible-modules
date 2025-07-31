@@ -80,7 +80,7 @@ class OpenBmcSystemInfoModule(OpenBmcModule):
         system = self.redfish.get_system("system")
         processor_collection = system.get_processor_collection()
         memory_collection = system.get_memory_collection()
-        pcie_devices = system.get_pcie_device_collection()
+       # pcie_devices = system.get_pcie_device_collection()
         network_interfaces = system.get_network_interfaces()
         system_info = {
             "BMC": {
@@ -124,36 +124,36 @@ class OpenBmcSystemInfoModule(OpenBmcModule):
                     "State": nic.get_state(),                    
                 } for nic in network_interfaces
             ],
-            "Processors": [
-                {
-                    "Id": processor.get_id(),
-                    "Name": processor.get_name(),
-                    "Model": processor.get_model(),
-                    "Socket": processor.get_socket(),
-                    "InstructionSet": processor.get_instruction_set(),
-                    "Manufacturer": processor.get_manufacturer(),
-                    "Architecture": processor.get_architecture(),
-                    "Type": processor.get_type(),
-                    "TotalCores": processor.get_total_cores(),
-                    "Status": processor.get_status(),
-                } for processor in processor_collection
-            ],
-            "DIMM": [
-                {
-                    "Id": memory.get_id(),
-                    "Name": memory.get_name(),
-                    "PartNumber": memory.get_part_number(),
-                    "SerialNumber": memory.get_serial_number(),
-                    "DeviceType": memory.get_device_type(),
-                    "Status": memory.get_status(),
-                    "Manufacturer": memory.get_manufacturer(),
-                    "DeviceLocator": memory.get_device_locator(),
-                    "CapacityMiB": memory.get_capacity_mib(),
-                    "OperatingSpeedMhz": memory.get_operating_speed_mhz(),
-                    "DataWidthBits": memory.get_data_with_bits(),
-                    "SpareDeviceCount": memory.get_spare_device_count(),
-                } for memory in memory_collection
-            ],
+            # "Processors": [
+            #     {
+            #         "Id": processor.get_id(),
+            #         "Name": processor.get_name(),
+            #         "Model": processor.get_model(),
+            #         "Socket": processor.get_socket(),
+            #         "InstructionSet": processor.get_instruction_set(),
+            #         "Manufacturer": processor.get_manufacturer(),
+            #         "Architecture": processor.get_architecture(),
+            #         "Type": processor.get_type(),
+            #         "TotalCores": processor.get_total_cores(),
+            #         "Status": processor.get_status(),
+            #     } for processor in processor_collection
+            # ],
+            # "DIMM": [
+            #     {
+            #         "Id": memory.get_id(),
+            #         "Name": memory.get_name(),
+            #         "PartNumber": memory.get_part_number(),
+            #         "SerialNumber": memory.get_serial_number(),
+            #         "DeviceType": memory.get_device_type(),
+            #         "Status": memory.get_status(),
+            #         "Manufacturer": memory.get_manufacturer(),
+            #         "DeviceLocator": memory.get_device_locator(),
+            #         "CapacityMiB": memory.get_capacity_mib(),
+            #         "OperatingSpeedMhz": memory.get_operating_speed_mhz(),
+            #         "DataWidthBits": memory.get_data_with_bits(),
+            #         "SpareDeviceCount": memory.get_spare_device_count(),
+            #     } for memory in memory_collection
+            # ],
             # "PCIeDevices": [
             #     {
             #         "Id": device.get_id(),
@@ -175,29 +175,29 @@ class OpenBmcSystemInfoModule(OpenBmcModule):
             #         ]
             #     } for device in pcie_devices
             # ],
-            "Fans": [
-                {
-                    "Id": fan.get_id(),
-                    "Name": fan.get_name(),
-                    "PartNumber": fan.get_part_number(),
-                    "Model": fan.get_model(),
-                    "Connector": fan.get_connector(),
-                    "Manufacturer": fan.get_manufacturer(),
-                    "Status": fan.get_status(),
-                } for fan in chassis_server.get_thermal().get_fan_collection()
-            ],
-            "PowerSupplies": [
-                {
-                    "Id": supply.get_id(),
-                    "Name": supply.get_name(),
-                    "SerialNumber": supply.get_serial_number(),
-                    "Model": supply.get_model(),
-                    "Manufacturer": supply.get_manufacturer(),
-                    "Status": supply.get_status(),
-                    "ProductVersion": supply.get_product_version(),
-                    "FirmwareVersion": supply.get_firmware_version(),
-                } for supply in chassis_server.get_power().get_power_supply_collection()
-            ],
+            # "Fans": [
+            #     {
+            #         "Id": fan.get_id(),
+            #         "Name": fan.get_name(),
+            #         "PartNumber": fan.get_part_number(),
+            #         "Model": fan.get_model(),
+            #         "Connector": fan.get_connector(),
+            #         "Manufacturer": fan.get_manufacturer(),
+            #         "Status": fan.get_status(),
+            #     } for fan in chassis_server.get_thermal().get_fan_collection()
+            # ],
+            # "PowerSupplies": [
+            #     {
+            #         "Id": supply.get_id(),
+            #         "Name": supply.get_name(),
+            #         "SerialNumber": supply.get_serial_number(),
+            #         "Model": supply.get_model(),
+            #         "Manufacturer": supply.get_manufacturer(),
+            #         "Status": supply.get_status(),
+            #         "ProductVersion": supply.get_product_version(),
+            #         "FirmwareVersion": supply.get_firmware_version(),
+            #     } for supply in chassis_server.get_power().get_power_supply_collection()
+            # ],
         }
         self.exit_json(msg="Operation successful.", system_info=system_info)
 
