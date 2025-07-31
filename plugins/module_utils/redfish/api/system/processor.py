@@ -23,7 +23,9 @@ class Processor(RedfishAPIObject):
     @classmethod
     def select_version(cls, version):  # type: (str) -> Optional[ClassVar[Processor]]
         if version == "#Processor.v1_9_0.Processor":
-            return Processor_v1_9_0
+            return Processor_v1_15_0
+        if version == "#Processor.v1_15_0.Processor":
+            return Processor_v1_15_0
 
     def get_model(self):  # type: () -> str
         raise NotImplementedError("Method not implemented")
@@ -54,6 +56,35 @@ class Processor_v1_9_0(Processor):
 
     def __init__(self, *args, **kwargs):
         super(Processor_v1_9_0, self).__init__(*args, **kwargs)
+
+    def get_model(self):  # type: () -> str
+        return self._get_field("Model")
+
+    def get_socket(self):  # type: () -> str
+        return self._get_field("Socket")
+
+    def get_instruction_set(self):  # type: () -> str
+        return self._get_field("InstructionSet")
+
+    def get_manufacturer(self):  # type: () -> str
+        return self._get_field("Manufacturer")
+
+    def get_architecture(self):  # type: () -> str
+        return self._get_field("ProcessorArchitecture")
+
+    def get_type(self):  # type: () -> str
+        return self._get_field("ProcessorType")
+
+    def get_total_cores(self):  # type: () -> int
+        return self._get_field("TotalCores")
+
+    def get_status(self):  # type: () -> Dict
+        return self._get_field("Status")
+
+class Processor_v1_15_0(Processor):
+
+    def __init__(self, *args, **kwargs):
+        super(Processor_v1_15_0, self).__init__(*args, **kwargs)
 
     def get_model(self):  # type: () -> str
         return self._get_field("Model")
